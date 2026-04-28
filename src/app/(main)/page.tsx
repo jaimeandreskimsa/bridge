@@ -13,6 +13,7 @@ import { HeroSection } from "@/components/home/hero-section";
 import { HandPreview } from "@/components/home/hand-preview";
 import { FeaturesSection } from "@/components/home/features-section";
 import { PageLoader } from "@/components/layout/page-loader";
+import { LandingNavbar } from "@/components/home/landing-navbar";
 
 async function getLandingStats() {
   const [teacherCount, studentCount, courseCount] = await Promise.all([
@@ -113,6 +114,7 @@ async function LandingPage() {
 
   return (
     <div style={{ background: "#060e1c" }}>
+      <LandingNavbar />
       <PageLoader />
 
       {/* ── HERO ── */}

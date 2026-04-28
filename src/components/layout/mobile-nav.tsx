@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { Home, BookOpen, Spade, MessageSquare, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +16,9 @@ const tabs = [
 
 export function MobileNav() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
+  if (!session?.user) return null;
 
   return (
     <nav

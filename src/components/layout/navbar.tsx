@@ -36,13 +36,16 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  const user = session?.user;
+  const user = status === "authenticated" ? session?.user : null;
   const role = user?.role;
+
+  // La landing page (/) tiene su propio navbar
+  if (pathname === "/" && !user) return null;
 
   return (
     <nav className="sticky top-0 z-50 w-full glass-dark">
@@ -58,9 +61,9 @@ export function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop nav */}
+          {/* Desktop nav — solo si hay sesión */}
           <div className="hidden md:flex md:items-center md:gap-0.5">
-            {navLinks
+            {user && navLinks
               .filter((l) => !role || l.roles.includes(role))
               .map((link) => {
                 const Icon = link.icon;
@@ -206,11 +209,11 @@ export function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {mobileOpen && (
+      {mobileOpen && user && (
         <div className="md:hidden border-t border-white/8 bg-navy-950/98">
           <div className="px-4 py-3 space-y-0.5">
             {navLinks
-              .filter((l) => !role || l.roles.includes(role))
+              .filter((l) => l.roles.includes(role ?? ""))
               .map((link) => {
                 const Icon = link.icon;
                 const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
