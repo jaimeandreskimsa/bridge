@@ -21,23 +21,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Contraseña", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        try {
+          if (!credentials?.email || !credentials?.password) return null;
 
-        const user = await db.user.findUnique({
-          where: { email: credentials.email as string },
-        });
+          const user = await db.user.findUnique({
+            where: { email: credentials.email as string },
+          });
 
-        if (!user || !user.passwordHash) return null;
+          if (!user || !user.passwordHash) return null;
 
-        const passwordMatch = await bcrypt.compare(
-          credentials.password as string,
-          user.passwordHash
-        );
+          const passwordMatch = await bcrypt.compare(
+            credentials.password as string,
+            user.passwordHash
+          );
 
-        if (!passwordMatch) return null;
-        if (user.status === "BANNED" || user.status === "SUSPENDED") return null;
+          if (!passwordMatch) return null;
+          if (user.status === "BANNED" || user.status === "SUSPENDED") return null;
 
-        return user;
+          return user;
+        } catch (err) {
+          console.error("[authorize] error:", err);
+          return null;
+        }
       },
     }),
   ],
