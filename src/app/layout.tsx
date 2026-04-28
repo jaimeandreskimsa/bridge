@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/shared/providers";
 import { Toaster } from "sonner";
 import { ServiceWorkerRegister } from "@/components/layout/sw-register";
+import { PwaInstallBanner } from "@/components/layout/pwa-install-banner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Toaster position="top-right" richColors />
         </Providers>
         <ServiceWorkerRegister />
+        <PwaInstallBanner />
       </body>
     </html>
   );
