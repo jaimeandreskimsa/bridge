@@ -44,16 +44,16 @@ function CardChip({
   card: number; assignment: Assignment; suitTextColor: string; onClick: () => void;
 }) {
   const styles: Record<Assignment, string> = {
-    none:  "bg-white text-slate-300 border-slate-200 hover:border-slate-300 hover:text-slate-500",
-    hand:  "bg-[#C9A23A]/10 text-[#9A7C28] border-[#C9A23A]/50 shadow-sm",
-    dummy: "bg-sky-50 text-sky-700 border-sky-300 shadow-sm",
+    none:  "bg-slate-50 text-slate-500 border-slate-300 hover:border-slate-400 hover:text-slate-700 hover:bg-white",
+    hand:  "bg-[#C9A23A]/15 text-[#7A5E1A] border-[#C9A23A] shadow-sm",
+    dummy: "bg-sky-100 text-sky-800 border-sky-400 shadow-sm",
   };
 
   return (
     <button
       onClick={onClick}
       className={cn(
-        "relative flex items-center justify-center w-10 h-12 rounded-lg border font-bold text-base transition-all duration-150 select-none active:scale-95",
+        "relative flex items-center justify-center w-10 h-12 rounded-lg border-2 font-bold text-base transition-all duration-150 select-none active:scale-95",
         styles[assignment]
       )}
       title={
