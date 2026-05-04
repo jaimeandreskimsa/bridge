@@ -1,89 +1,184 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f5f4f0;
-  --foreground: #0d1117;
-  --card: #ffffff;
-  --card-foreground: #0d1117;
-  --popover: #ffffff;
-  --popover-foreground: #0d1117;
-  --primary: #0d1b2a;
-  --primary-foreground: #ffffff;
-  --secondary: #edecea;
-  --secondary-foreground: #0d1b2a;
-  --muted: #eeede9;
-  --muted-foreground: #6b7280;
-  --accent: #edecea;
-  --accent-foreground: #0d1b2a;
-  --destructive: #dc2626;
-  --destructive-foreground: #ffffff;
-  --border: #e2e0dc;
-  --input: #e2e0dc;
-  --ring: #0d1b2a;
-  --radius: 0.75rem;
+/* ═══════════════════════════════════════════════════════════════
+   BRIDGE ACADEMY — Design System
+   Paleta premium light · Tipografía Inter · Naipes como motivo
+   ═══════════════════════════════════════════════════════════════ */
 
-  /* Gold accent */
-  --gold: #c9a23a;
-  --gold-light: #f0d47a;
-  --gold-dark: #9a7c28;
+:root {
+  /* ── Brand ──────────────────────────────────────────────────── */
+  --navy:         #0F1C3F;
+  --navy-light:   #1E3A5F;
+  --gold:         #C9A23A;
+  --gold-light:   #F0D47A;
+  --gold-dark:    #9A7C28;
+  --red-suit:     #DC2626;
+
+  /* ── shadcn/ui tokens ───────────────────────────────────────── */
+  --background:             #F7F8FC;
+  --foreground:             #0F172A;
+  --card:                   #FFFFFF;
+  --card-foreground:        #0F172A;
+  --popover:                #FFFFFF;
+  --popover-foreground:     #0F172A;
+  --primary:                #0F1C3F;
+  --primary-foreground:     #FFFFFF;
+  --secondary:              #F1F5F9;
+  --secondary-foreground:   #0F172A;
+  --muted:                  #F1F5F9;
+  --muted-foreground:       #64748B;
+  --accent:                 #F1F5F9;
+  --accent-foreground:      #0F172A;
+  --destructive:            #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border:                 #E2E8F0;
+  --input:                  #E2E8F0;
+  --ring:                   #0F1C3F;
+  --radius:                 0.75rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-primary: var(--primary);
+  --color-background:         var(--background);
+  --color-foreground:         var(--foreground);
+  --color-card:               var(--card);
+  --color-card-foreground:    var(--card-foreground);
+  --color-primary:            var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-destructive: var(--destructive);
+  --color-secondary:          var(--secondary);
+  --color-muted:              var(--muted);
+  --color-muted-foreground:   var(--muted-foreground);
+  --color-accent:             var(--accent);
+  --color-border:             var(--border);
+  --color-input:              var(--input);
+  --color-ring:               var(--ring);
+  --color-destructive:        var(--destructive);
 
-  /* Gold palette */
-  --color-gold: var(--gold);
-  --color-gold-light: var(--gold-light);
-  --color-gold-dark: var(--gold-dark);
+  --color-gold:               var(--gold);
+  --color-gold-light:         var(--gold-light);
+  --color-gold-dark:          var(--gold-dark);
 
-  /* Bridge Academy navy palette */
-  --color-navy-50: #f0f4f8;
-  --color-navy-100: #d9e2ec;
-  --color-navy-200: #bcccdc;
-  --color-navy-300: #9fb3c8;
-  --color-navy-400: #829ab1;
-  --color-navy-500: #627d98;
-  --color-navy-600: #486581;
-  --color-navy-700: #334e68;
-  --color-navy-800: #1a2f4a;
-  --color-navy-900: #0d1b2a;
-  --color-navy-950: #070e18;
+  --color-navy-50:   #F0F4F8;
+  --color-navy-100:  #D9E2EC;
+  --color-navy-200:  #BCCCDC;
+  --color-navy-300:  #9FB3C8;
+  --color-navy-400:  #829AB1;
+  --color-navy-500:  #627D98;
+  --color-navy-600:  #486581;
+  --color-navy-700:  #334E68;
+  --color-navy-800:  #1A2F4A;
+  --color-navy-900:  #0D1B2A;
+  --color-navy-950:  #070E18;
 }
 
+/* ── Base ─────────────────────────────────────────────────────── */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-feature-settings: "kern" 1, "liga" 1;
+  font-feature-settings: "kern" 1, "liga" 1, "cv11" 1;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Bridge suit colors */
-.suit-spade, .suit-club { color: #111827; }
-.suit-heart, .suit-diamond { color: #dc2626; }
-
-/* Smooth scrolling */
 html { scroll-behavior: smooth; }
 
-/* Premium scrollbar */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #c9a23a40; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #c9a23a80; }
+/* ── Scrollbar ────────────────────────────────────────────────── */
+::-webkit-scrollbar              { width: 5px; height: 5px; }
+::-webkit-scrollbar-track        { background: transparent; }
+::-webkit-scrollbar-thumb        { background: #CBD5E1; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover  { background: #94A3B8; }
 
-/* Video player */
+/* ── Suit colors ──────────────────────────────────────────────── */
+.suit-spade, .suit-club    { color: #0F172A; }
+.suit-heart, .suit-diamond { color: #DC2626; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PLATFORM UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* White elevated card */
+.platform-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.05), 0 4px 16px rgba(15,23,42,0.04);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.platform-card:hover {
+  box-shadow: 0 4px 24px rgba(15,23,42,0.1), 0 12px 40px rgba(15,23,42,0.06);
+  transform: translateY(-2px);
+}
+
+/* Flat tinted surface */
+.platform-surface {
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+}
+
+/* Playing-card container with corner ♠ symbols */
+.naipe-card {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.07);
+  overflow: hidden;
+}
+.naipe-card::before {
+  content: "♠";
+  position: absolute;
+  top: 10px; left: 14px;
+  font-size: 11px; line-height: 1;
+  color: #0F1C3F; opacity: 0.08;
+  pointer-events: none;
+}
+.naipe-card::after {
+  content: "♠";
+  position: absolute;
+  bottom: 10px; right: 14px;
+  font-size: 11px; line-height: 1;
+  color: #0F1C3F; opacity: 0.08;
+  transform: rotate(180deg);
+  pointer-events: none;
+}
+
+/* Suit badge colors */
+.badge-navy    { background: rgba(15,28,63,0.07);  color: #0F1C3F; border: 1px solid rgba(15,28,63,0.12); }
+.badge-gold    { background: rgba(201,162,58,0.1); color: #9A7C28; border: 1px solid rgba(201,162,58,0.25); }
+.badge-red     { background: rgba(220,38,38,0.08); color: #DC2626; border: 1px solid rgba(220,38,38,0.15); }
+
+/* Premium card (course cards, etc.) */
+.card-premium {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 4px 16px rgba(15,23,42,0.06);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.card-premium:hover {
+  box-shadow: 0 4px 24px rgba(15,23,42,0.12), 0 12px 40px rgba(15,23,42,0.08);
+  transform: translateY(-2px);
+}
+
+/* ── Gold gradient text ─────────────────────────────────────── */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F0D47A 0%, #C9A23A 50%, #9A7C28 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass dark (home page landing navbar only) ─────────────── */
+.glass-dark {
+  background: rgba(13,27,42,0.92);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid rgba(201,162,58,0.12);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VIDEO
+   ═══════════════════════════════════════════════════════════════ */
 mux-player {
   --seek-backward-button: none;
   --seek-forward-button: none;
@@ -93,67 +188,19 @@ mux-player {
   overflow: hidden;
 }
 
-/* ── Card / Bridge Animations ──────────────────────────────────────────── */
-@keyframes float-card {
-  0%, 100% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
-  50%       { transform: translateY(-18px) rotate(var(--rot, 0deg)); }
-}
-@keyframes float-card-reverse {
-  0%, 100% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
-  50%       { transform: translateY(18px) rotate(var(--rot, 0deg)); }
-}
-@keyframes suit-spin {
-  0%   { transform: rotateY(0deg); }
-  50%  { transform: rotateY(180deg); }
-  100% { transform: rotateY(360deg); }
-}
-@keyframes card-deal {
-  0%   { opacity: 0; transform: translateX(-60px) translateY(30px) rotate(-15deg); }
-  100% { opacity: 1; transform: translateX(0) translateY(0) rotate(var(--rot, 0deg)); }
-}
-@keyframes loader-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%       { transform: scale(0.85); opacity: 0.6; }
-}
-@keyframes loader-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-@keyframes shine {
-  0%   { left: -100%; }
-  100% { left: 200%; }
-}
-@keyframes ticker {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
 
-.animate-float-card {
-  animation: float-card 6s ease-in-out infinite;
-}
-.animate-float-card-reverse {
-  animation: float-card-reverse 7s ease-in-out infinite;
-}
-.animate-card-deal {
-  animation: card-deal 0.6s cubic-bezier(0.16,1,0.3,1) both;
-}
-.animate-loader-pulse {
-  animation: loader-pulse 1.2s ease-in-out infinite;
-}
-.animate-ticker {
-  animation: ticker 28s linear infinite;
-}
-
-/* ── Animations ─────────────────────────────────────────────────────────── */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0);    }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in { animation: fadeIn 0.35s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-fade-in { animation: fadeIn 0.3s cubic-bezier(0.16,1,0.3,1) both; }
 
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0);    }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .animate-slide-up { animation: slideUp 0.45s cubic-bezier(0.16,1,0.3,1) both; }
 
@@ -162,14 +209,14 @@ mux-player {
   100% { background-position:  400px 0; }
 }
 .animate-shimmer {
-  background: linear-gradient(90deg, #f0ede8 25%, #e8e4de 50%, #f0ede8 75%);
+  background: linear-gradient(90deg, #F1F5F9 25%, #E8EDF5 50%, #F1F5F9 75%);
   background-size: 800px 100%;
   animation: shimmer 1.6s infinite linear;
 }
 
 @keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(201,162,58,0.35); }
-  50%       { box-shadow: 0 0 0 8px rgba(201,162,58,0);  }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,162,58,0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(201,162,58,0); }
 }
 .animate-pulse-gold { animation: pulse-gold 2s ease-in-out infinite; }
 
@@ -179,31 +226,43 @@ mux-player {
 }
 .animate-pulse-green { animation: pulse-green 1.5s ease-in-out; }
 
-/* ── Premium card ───────────────────────────────────────────────────────── */
-.card-premium {
-  background: #ffffff;
-  border: 1px solid #e2e0dc;
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.04), 0 4px 16px -2px rgba(0,0,0,0.06);
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
+/* Landing page card animations (home page) */
+@keyframes float-card {
+  0%, 100% { transform: translateY(0px) rotate(var(--rot,0deg)); }
+  50%       { transform: translateY(-18px) rotate(var(--rot,0deg)); }
 }
-.card-premium:hover {
-  box-shadow: 0 4px 24px -4px rgba(0,0,0,0.12), 0 12px 40px -8px rgba(0,0,0,0.08);
-  transform: translateY(-2px);
+@keyframes float-card-reverse {
+  0%, 100% { transform: translateY(0px) rotate(var(--rot,0deg)); }
+  50%       { transform: translateY(18px) rotate(var(--rot,0deg)); }
+}
+@keyframes card-deal {
+  0%   { opacity: 0; transform: translateX(-60px) translateY(30px) rotate(-15deg); }
+  100% { opacity: 1; transform: translateX(0) translateY(0) rotate(var(--rot,0deg)); }
+}
+@keyframes loader-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(0.85); opacity: 0.6; }
+}
+@keyframes loader-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes suit-spin {
+  0%   { transform: rotateY(0deg); }
+  50%  { transform: rotateY(180deg); }
+  100% { transform: rotateY(360deg); }
+}
+@keyframes shine {
+  0%   { left: -100%; }
+  100% { left: 200%; }
 }
 
-/* ── Glass panel ────────────────────────────────────────────────────────── */
-.glass-dark {
-  background: rgba(13,27,42,0.92);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid rgba(201,162,58,0.12);
-}
-
-/* ── Gold gradient text ─────────────────────────────────────────────────── */
-.text-gold-gradient {
-  background: linear-gradient(135deg, #f0d47a 0%, #c9a23a 50%, #9a7c28 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+.animate-float-card         { animation: float-card 6s ease-in-out infinite; }
+.animate-float-card-reverse { animation: float-card-reverse 7s ease-in-out infinite; }
+.animate-card-deal          { animation: card-deal 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-loader-pulse       { animation: loader-pulse 1.2s ease-in-out infinite; }
+.animate-ticker             { animation: ticker 28s linear infinite; }

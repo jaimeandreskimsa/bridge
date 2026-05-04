@@ -16,24 +16,32 @@ import { PageLoader } from "@/components/layout/page-loader";
 import { LandingNavbar } from "@/components/home/landing-navbar";
 
 async function getLandingStats() {
-  const [teacherCount, studentCount, courseCount] = await Promise.all([
-    db.teacherProfile.count(),
-    db.user.count({ where: { role: "ALUMNO" } }),
-    db.course.count({ where: { status: "PUBLISHED" } }),
-  ]);
-  return { teacherCount, studentCount, courseCount };
+  try {
+    const [teacherCount, studentCount, courseCount] = await Promise.all([
+      db.teacherProfile.count(),
+      db.user.count({ where: { role: "ALUMNO" } }),
+      db.course.count({ where: { status: "PUBLISHED" } }),
+    ]);
+    return { teacherCount, studentCount, courseCount };
+  } catch {
+    return { teacherCount: 0, studentCount: 0, courseCount: 0 };
+  }
 }
 
 async function getFeaturedCourses() {
-  return db.course.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: { averageRating: "desc" },
-    take: 3,
-    include: {
-      teacherProfile: { include: { user: true } },
-      _count: { select: { enrollments: true } },
-    },
-  });
+  try {
+    return await db.course.findMany({
+      where: { status: "PUBLISHED" },
+      orderBy: { averageRating: "desc" },
+      take: 3,
+      include: {
+        teacherProfile: { include: { user: true } },
+        _count: { select: { enrollments: true } },
+      },
+    });
+  } catch {
+    return [];
+  }
 }
 
 async function getLastProgress(userId: string) {
