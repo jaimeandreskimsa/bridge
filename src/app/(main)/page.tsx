@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/courses/course-card";
 import {
-  BookOpen, Users, Star, Spade, Play, Trophy, ChevronRight, Zap,
+  BookOpen, Users, Star, Spade, Play, Trophy, ChevronRight, Zap, Flame,
 } from "lucide-react";
 import { levelLabel } from "@/lib/utils";
 import { FloatingCards, SuitTicker } from "@/components/home/floating-cards";
@@ -341,76 +341,92 @@ async function LoggedInHome({ userId, userName }: { userId: string; userName?: s
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Buenos días" : hour < 19 ? "Buenas tardes" : "Buenas noches";
 
+  const quickLinks = [
+    { href: "/cursos",      icon: BookOpen, label: "Cursos",       bg: "bg-[#0F1C3F]",    iconColor: "text-white" },
+    { href: "/mano-del-dia",icon: Spade,    label: "Mano del día", bg: "bg-gradient-to-br from-[#C9A23A] to-[#9A7C28]", iconColor: "text-white" },
+    { href: "/feed",        icon: Users,    label: "Comunidad",    bg: "bg-sky-600",      iconColor: "text-white" },
+    { href: "/mi-progreso", icon: Trophy,   label: "Mi progreso",  bg: "bg-violet-600",   iconColor: "text-white" },
+  ];
+
   return (
-    <div className="min-h-screen" style={{ background: "linear-gradient(180deg, #0a1628 0%, #060e1c 100%)" }}>
+    <div className="page-inner">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 space-y-10">
 
-        {/* Header */}
-        <div className="flex items-start justify-between">
+        {/* ── Header ── */}
+        <div className="flex items-start justify-between gap-4 animate-fade-in">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#c9a23a]/60 mb-1">{greeting}</p>
-            <h1 className="text-3xl font-bold text-white tracking-tight">{firstName}</h1>
-            <p className="text-sm text-white/40 mt-1.5">
-              Nivel: <span className="font-semibold text-white/60">{levelLabel(playerLevel?.level ?? "BEGINNER")}</span>
+            <p className="section-label mb-1">{greeting}</p>
+            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">{firstName}</h1>
+            <div className="flex items-center gap-3 mt-2 flex-wrap">
+              <span className="text-sm text-slate-500">
+                Nivel: <span className="font-semibold text-slate-700">{levelLabel(playerLevel?.level ?? "BEGINNER")}</span>
+              </span>
               {playerLevel?.currentStreak ? (
-                <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 text-xs font-bold">
-                  🔥 {playerLevel.currentStreak} días
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-700 text-xs font-bold">
+                  <Flame className="w-3 h-3" /> {playerLevel.currentStreak} días de racha
                 </span>
               ) : null}
-            </p>
+            </div>
           </div>
+
           {todayHand && (
             <Link
               href="/mano-del-dia"
-              className="flex items-center gap-3 bg-navy-950 rounded-xl px-4 py-3 hover:opacity-90 transition-opacity group shadow-lg shadow-navy-950/10"
+              className="group shrink-0 rounded-[14px] p-[1.5px] bg-gradient-to-br from-[#C9A23A]/60 via-[#F0D47A]/80 to-[#9A7C28]/60 hover:shadow-[0_8px_24px_rgba(201,162,58,0.25)] transition-all duration-200 hover:-translate-y-0.5"
             >
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#c9a23a] to-[#9a7c28] flex items-center justify-center shrink-0">
-                <Spade className="w-4 h-4 text-white" />
+              <div className="bg-white rounded-[12.5px] flex items-center gap-3 px-4 py-3">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C9A23A] to-[#9A7C28] flex items-center justify-center shrink-0 shadow-sm">
+                  <Spade className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Mano del día</p>
+                  <p className="text-sm font-bold text-slate-800 truncate max-w-[140px]">{todayHand.title}</p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-[#C9A23A] transition-colors ml-1" />
               </div>
-              <div>
-                <p className="text-[10px] text-white/40 uppercase tracking-widest">Mano del día</p>
-                <p className="text-sm font-semibold text-white truncate max-w-[140px]">
-                  {todayHand.title}
-                </p>
-              </div>
-              <ChevronRight className="w-4 h-4 text-white/30 group-hover:text-[#c9a23a] transition-colors ml-1" />
             </Link>
           )}
         </div>
 
-        {/* Continuar viendo */}
+        {/* ── Continuar viendo ── */}
         {lastProgress && (
-          <section>
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/30 mb-3 flex items-center gap-2">
+          <section className="animate-slide-in-up">
+            <p className="section-label mb-3 flex items-center gap-2">
               <Play className="w-3 h-3" /> Continuar viendo
             </p>
             <Link href={`/cursos/${lastProgress.lesson.module.courseId}/${lastProgress.lessonId}`}>
-              <div className="relative rounded-2xl overflow-hidden bg-navy-950 h-40 shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300 group">
-                {lastProgress.lesson.module.course.thumbnail && (
-                  <Image
-                    src={lastProgress.lesson.module.course.thumbnail}
-                    alt=""
-                    fill
-                    className="object-cover opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500"
-                  />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-r from-navy-950/95 via-navy-950/70 to-transparent" />
-                {/* Gold strip */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#c9a23a] via-[#f0d47a] to-transparent" />
-                <div className="absolute inset-0 p-6 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#c9a23a] to-[#9a7c28] flex items-center justify-center shrink-0 shadow-lg shadow-amber-900/30">
-                    <Play className="w-5 h-5 text-white fill-white ml-0.5" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[10px] text-[#c9a23a]/70 uppercase tracking-widest mb-1.5">
-                      {lastProgress.lesson.module.course.title}
-                    </p>
-                    <p className="text-white font-bold truncate text-base">
-                      {lastProgress.lesson.title}
-                    </p>
-                    <p className="text-white/40 text-xs mt-1">
-                      {lastProgress.lesson.module.title}
-                    </p>
+              <div className="rounded-[18px] p-[1.5px] bg-gradient-to-br from-[#0F1C3F]/30 via-[#C9A23A]/25 to-[#0F1C3F]/10 hover:shadow-[0_14px_40px_rgba(15,28,63,0.14)] transition-all duration-300 hover:-translate-y-0.5 group">
+                <div className="relative rounded-[16.5px] overflow-hidden h-40 bg-[#0F1C3F]">
+                  {lastProgress.lesson.module.course.thumbnail && (
+                    <Image
+                      src={lastProgress.lesson.module.course.thumbnail}
+                      alt=""
+                      fill
+                      className="object-cover opacity-25 group-hover:opacity-35 group-hover:scale-105 transition-all duration-500"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#0F1C3F]/95 via-[#0F1C3F]/70 to-transparent" />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#C9A23A] via-[#F0D47A] to-transparent" />
+                  <div className="absolute inset-0 p-6 flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C9A23A] to-[#9A7C28] flex items-center justify-center shrink-0 shadow-lg">
+                      <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[10px] text-[#C9A23A]/80 uppercase tracking-widest mb-1.5 font-bold">
+                        {lastProgress.lesson.module.course.title}
+                      </p>
+                      <p className="text-white font-extrabold truncate text-base">
+                        {lastProgress.lesson.title}
+                      </p>
+                      <p className="text-white/40 text-xs mt-1">
+                        {lastProgress.lesson.module.title}
+                      </p>
+                    </div>
+                    <div className="ml-auto shrink-0">
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 text-white/70 text-xs font-semibold group-hover:bg-[#C9A23A] group-hover:text-white transition-all duration-200">
+                        Reanudar <ChevronRight className="w-3 h-3" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -418,36 +434,34 @@ async function LoggedInHome({ userId, userName }: { userId: string; userName?: s
           </section>
         )}
 
-        {/* Quick links */}
-        <section className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            { href: "/cursos", icon: BookOpen, label: "Cursos", color: "from-[#0d2040] to-[#0a1628]" },
-            { href: "/mano-del-dia", icon: Spade, label: "Mano del día", color: "from-[#c9a23a] to-[#9a7c28]" },
-            { href: "/feed", icon: Users, label: "Feed", color: "from-sky-800 to-sky-900" },
-            { href: "/mi-progreso", icon: Trophy, label: "Mi progreso", color: "from-violet-800 to-violet-900" },
-          ].map((item) => (
+        {/* ── Quick links ── */}
+        <section className="grid grid-cols-2 sm:grid-cols-4 gap-3 animate-slide-in-up stagger-1">
+          {quickLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center gap-3 rounded-xl border border-white/8 bg-white/4 px-4 py-3.5 hover:bg-white/8 hover:-translate-y-0.5 transition-all duration-200 group"
+              className="group rounded-[14px] p-[1.5px] bg-gradient-to-br from-slate-200 via-[#C9A23A]/10 to-slate-200 hover:from-[#0F1C3F]/20 hover:via-[#C9A23A]/30 hover:to-slate-200 hover:shadow-[0_8px_24px_rgba(15,28,63,0.10)] transition-all duration-200 hover:-translate-y-0.5"
             >
-              <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${item.color} flex items-center justify-center shrink-0 shadow-sm border border-white/8`}>
-                <item.icon className="w-4 h-4 text-white" />
+              <div className="bg-white rounded-[12.5px] flex items-center gap-3 px-4 py-3.5">
+                <div className={`w-9 h-9 rounded-xl ${item.bg} flex items-center justify-center shrink-0 shadow-sm`}>
+                  <item.icon className={`w-4 h-4 ${item.iconColor}`} />
+                </div>
+                <span className="text-sm font-bold text-slate-700 group-hover:text-[#0F1C3F] transition-colors">{item.label}</span>
+                <ChevronRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-[#C9A23A] transition-colors ml-auto" />
               </div>
-              <span className="text-sm font-semibold text-white/70 group-hover:text-white transition-colors">{item.label}</span>
             </Link>
           ))}
         </section>
 
-        {/* Recomendados */}
+        {/* ── Recomendados ── */}
         {recommended.length > 0 && (
-          <section>
+          <section className="animate-slide-in-up stagger-2">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-[#c9a23a]/60 mb-1">Para ti</p>
-                <h2 className="text-lg font-bold text-white">Recomendados para tu nivel</h2>
+                <p className="section-label mb-1">Para ti</p>
+                <h2 className="text-lg font-extrabold text-slate-900">Recomendados para tu nivel</h2>
               </div>
-              <Link href="/cursos" className="text-xs font-semibold text-white/30 hover:text-[#c9a23a] transition-colors flex items-center gap-1">
+              <Link href="/cursos" className="text-xs font-semibold text-slate-400 hover:text-[#C9A23A] transition-colors flex items-center gap-1">
                 Ver todos <ChevronRight className="w-3 h-3" />
               </Link>
             </div>
@@ -475,17 +489,17 @@ async function LoggedInHome({ userId, userName }: { userId: string; userName?: s
           </section>
         )}
 
-        {/* Populares */}
+        {/* ── Populares ── */}
         {popular.length > 0 && (
-          <section className="pb-10">
+          <section className="pb-10 animate-slide-in-up stagger-3">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-[#c9a23a]/60 mb-1">Tendencia</p>
-                <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Star className="w-4 h-4 text-[#c9a23a] fill-[#c9a23a]" /> Los más populares
+                <p className="section-label mb-1">Tendencia</p>
+                <h2 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                  <Star className="w-4 h-4 text-[#C9A23A] fill-[#C9A23A]" /> Los más populares
                 </h2>
               </div>
-              <Link href="/cursos" className="text-xs font-semibold text-white/30 hover:text-[#c9a23a] transition-colors flex items-center gap-1">
+              <Link href="/cursos" className="text-xs font-semibold text-slate-400 hover:text-[#C9A23A] transition-colors flex items-center gap-1">
                 Ver todos <ChevronRight className="w-3 h-3" />
               </Link>
             </div>
